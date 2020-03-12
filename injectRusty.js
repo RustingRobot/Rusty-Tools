@@ -2,6 +2,6 @@
 console.log("Rusty features loaded");
 
 while(true){
-  console.log("shit");
+  console.log("testing");
   document.getElementsByClassName("label_input-label_3KjCa").style.color = "blue";
 }
