@@ -111,6 +111,57 @@ div#s3devDDOut.vis ul#s3devDD {
     content: '● ';
 }
 
+/* ------------------ */
+.drawSideBar {
+  padding: calc(0.1 * .25rem);
+}
+
+.onionSkinBtn {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+
+}
+
+.onionSkinBtn input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.btnImg {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: Transparent;
+  transition: .4s;
+  background-image: url("res/onionSkinIcon.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+input:checked + .btnImg {
+  background-color: #2196F3;
+  filter: brightness(10);
+}
+
+onionSkinBtn:checked {
+  background-color: #2196F3;
+}
+
+.osAlphaInp{
+
+  margin: 8px 0;
+}
+/* ------------------ */
+
+
 .define {
     color: rgb(255, 102, 128);
 }
