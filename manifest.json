@@ -17,7 +17,7 @@
     {
       "run_at": "document_idle",
       "matches": [
-        "https://scratch.mit.edu/projects/*",
+        "https://scratch.mit.edu/projects/*/editor/",
         "https://llk.github.io/scratch-gui/*"
       ],
       "js": [
