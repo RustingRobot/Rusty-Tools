@@ -183,6 +183,14 @@ onionSkinBtn:checked {
   padding-right: 2rem;
   user-select: none;
 }
+
+.osCanvas{
+  position:absolute;
+  pointer-events:none;
+  top:0px;
+  left:0px;
+  opacity: 0.5;
+}
 /* --------end---------- */
 
 

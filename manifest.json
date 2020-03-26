@@ -4,7 +4,7 @@
   "short_name": "Rusty Tools",
   "description": "Even more tools for your scratch dev workflow.",
   "author": "RustingRobot",
-  "version": "0.2.1",
+  "version": "0.2.4",
   "homepage_url": "https://github.com/RustingRobot/Rusty-Tools",
   "icons": {
     "32": "favicon.png",
