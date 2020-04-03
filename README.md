@@ -6,5 +6,5 @@ on this. Thanks for passing by and check out the original [Dev Tools extention](
 
 # Authors
 
-original work: Griffpach
+original work: Griffpach  
 additional work: Rusting Robot
