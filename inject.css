@@ -191,6 +191,29 @@ onionSkinBtn:checked {
   left:0px;
   opacity: 0.5;
 }
+/* ---collapsibles------ */
+.collapsableBG{
+  pointer-events: all;
+  border: 1px solid #000000;
+  border-style: solid;
+}
+
+.collapsible{
+  fill: orange;
+  pointer-events: all;
+}
+
+.collapsible:hover{
+  fill: #ffc14d;
+  cursor: pointer;
+}
+
+.content{
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
 /* --------end---------- */
 
 
