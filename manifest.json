@@ -3,9 +3,9 @@
   "name": "Rusty Scratch Tools",
   "short_name": "Rusty Tools",
   "description": "Even more tools for your scratch dev workflow.",
-  "author": "Griffpatch",
-  "version": "0.1.3",
-  "homepage_url": "https://www.griffpatch.co.uk",
+  "author": "RustingRobot",
+  "version": "0.2.4",
+  "homepage_url": "https://github.com/RustingRobot/Rusty-Tools",
   "icons": {
     "32": "favicon.png",
     "128": "bigIcon.png"
@@ -17,7 +17,7 @@
     {
       "run_at": "document_idle",
       "matches": [
-        "https://scratch.mit.edu/projects/*/editor/",
+        "https://scratch.mit.edu/projects/*",
         "https://llk.github.io/scratch-gui/*"
       ],
       "js": [
@@ -35,6 +35,6 @@
   ],
   "web_accessible_resources": [
     "inject3.js",
-    "onionSkinIcon.svg"
+    "injectRusty.js"
   ]
 }

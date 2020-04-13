@@ -111,23 +111,21 @@ div#s3devDDOut.vis ul#s3devDD {
     content: '● ';
 }
 
-/* ------------------ */
-.drawSideBar {
-  padding: calc(0.1 * .25rem);
-}
-
+/* -------Rusty's css elements----------- */
 .onionSkinBtn {
   position: relative;
   display: inline-block;
   width: 32px;
   height: 32px;
-
+  user-select: none;
 }
 
 .onionSkinBtn input {
   opacity: 0;
   width: 0;
   height: 0;
+  user-select: none;
+
 }
 
 .btnImg {
@@ -142,13 +140,16 @@ div#s3devDDOut.vis ul#s3devDD {
   background-color: Transparent;
   transition: .4s;
   background-image: url("res/onionSkinIcon.svg");
+  content: url("res/onionSkinIcon.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  user-select: none;
+  border-radius: .25rem;
 }
 
 input:checked + .btnImg {
-  background-color: #2196F3;
-  filter: brightness(10);
+  background-color: #1a3459;
+  filter: brightness(3);
 }
 
 onionSkinBtn:checked {
@@ -156,10 +157,64 @@ onionSkinBtn:checked {
 }
 
 .osAlphaInp{
+  height: 2rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #575e75;
 
-  margin: 8px 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E9EEF2;
+  border-radius: 2rem;
+  padding-left: 0.5rem;
+
+  outline: none;
+  cursor: text;
+  overflow: hidden;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  width: 4rem;
+  user-select: none;
 }
-/* ------------------ */
+
+.OnionSkin-container{
+  padding-right: 2rem;
+  user-select: none;
+}
+
+.osCanvas{
+  position:absolute;
+  pointer-events:none;
+  top:0px;
+  left:0px;
+  opacity: 0.5;
+}
+/* ---collapsibles------ */
+.collapsableBG{
+  pointer-events: all;
+  border: 1px solid #000000;
+  border-style: solid;
+}
+
+.collapsible{
+  fill: orange;
+  pointer-events: all;
+}
+
+.collapsible:hover{
+  fill: #ffc14d;
+  cursor: pointer;
+}
+
+.content{
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+/* --------end---------- */
 
 
 .define {
