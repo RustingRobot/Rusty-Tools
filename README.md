@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 # Griffpatch's Scratch 3 Dev Tools Chrome Browser Extension
+=======
+# Rusty-Tools
+>>>>>>> d9a08f9928e21fe8f3178461ce60e5b75c092aa9
 
 Welcome all - This is a chrome extension I'm developing to add new complementary features to the awesome [Scratch](https://scratch.mit.edu) website. The source code is provided here for you to see, but you can more easily download the official extension from the [Google Chrome Webstore](https://chrome.google.com/webstore/detail/scratch-3-developer-tools/phacniajokfchdcamjhonkbhlcipplno).
 
+<<<<<<< HEAD
 ## Getting Started
 
 To use the extension, download it from [here](https://chrome.google.com/webstore/detail/scratch-3-developer-tools/phacniajokfchdcamjhonkbhlcipplno).
@@ -53,3 +58,9 @@ This project is licensed under the GNU General Public License v3 - see the [LICE
 ## Acknowledgments
 
 The Scratch Team are awesome - Thanks for Scratch!
+=======
+# Authors
+
+original work: Griffpach  
+additional work: Rusting Robot
+>>>>>>> d9a08f9928e21fe8f3178461ce60e5b75c092aa9
