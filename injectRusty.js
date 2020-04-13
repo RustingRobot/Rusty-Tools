@@ -62,7 +62,6 @@ function OSClick(){//set value for the onion skin button
     `)
     var canvas = document.getElementById("osCanvas");
     var dCanvas = canvas.getContext("2d");
-    var zoomLvl, midCanvasX, midCanvasY;
     DrawLoop();
   }else{
     document.getElementById("osCanvas").parentNode.removeChild(document.getElementById("osCanvas"));
