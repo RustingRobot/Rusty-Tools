@@ -120,13 +120,36 @@ div#s3devDDOut.vis ul#s3devDD {
   user-select: none;
 }
 
+.onionAddBtn {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    user-select: none;
+    border-radius: .25rem;
+    background: transparent;
+    color: #d9d9d9;
+    border-color: #d9d9d9;
+    border-style: solid;
+    border-width: thin;
+
+    background-image: url("res/stageIcon.svg");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+}
+
+.onionAddBtn:active{
+    background: #dbeaff;
+}
+
 .onionSkinBtn input {
   opacity: 0;
   width: 0;
   height: 0;
   user-select: none;
 
-}
+} 
 
 .btnImg {
   width: 32px;
@@ -180,7 +203,6 @@ onionSkinBtn:checked {
 }
 
 .OnionSkin-container{
-  padding-right: 2rem;
   user-select: none;
 }
 

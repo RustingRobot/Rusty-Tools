@@ -26,19 +26,22 @@ function CostumesClick(){ //append the onion skin button (and other text fields)
   //Onion Skin buttons and text fields:
   let convertBtn = document.getElementsByClassName('button_button_u6SE2 paint-editor_bitmap-button_keW7B');
   convertBtn[0].insertAdjacentHTML('afterend', `
-  <label class="onionSkinBtn">
+  <label class="onionSkinBtn" title="set onion skin">
     <input type="checkbox" id="osBtn">
     <span class="btnImg"></span>
   </label>
     <div class= "OnionSkin-container">
-      <span class="alphaInputSpan">
+      <span class="alphaInputSpan" title="set opacity">
         <input class="osAlphaInp" id="osAlphaInp" type = "text" placeholder="opacity"></input>
         <span class="label_input-label_1s1ft">%</span>
       </span>
       <span>
-        <input class="osAlphaInp" id="osFrameNr" type = "text" placeholder="# frame"></input>
+        <input class="osAlphaInp" id="osFrameNr" type = "text" placeholder="# frame" title="set frame nr."></input>
       </span>
     </div>
+  <label >
+    <button type="button" class="onionAddBtn" id="onionAddBtn" title="stage this frame"></button> 
+  </label>
   `);
   var osBtn  = document.getElementById("osBtn");
   if(osValue){osBtn.checked=true;}
@@ -46,6 +49,10 @@ function CostumesClick(){ //append the onion skin button (and other text fields)
   osBtn.addEventListener("change", function() {
       OSClick();
   }, false);
+  var stageBtn = document.getElementById("onionAddBtn");
+  stageBtn.addEventListener("click", function() {
+    stageClick();
+  })
   //getty all images
   costumeImages = document.getElementsByClassName("sprite-selector-item_sprite-image_2QWuK");
 
@@ -67,9 +74,13 @@ function OSClick(){//set value for the onion skin button
     document.getElementById("osCanvas").parentNode.removeChild(document.getElementById("osCanvas"));
   }
 
-  function DrawLoop(){
+  function DrawLoop(){//update the hidden canvas
     
     if(osValue){window.setTimeout(DrawLoop,0);}
     else{return;}
   }
+}
+
+function stageClick(){
+  console.log("noiec");
 }
