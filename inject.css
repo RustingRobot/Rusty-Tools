@@ -133,7 +133,7 @@ div#s3devDDOut.vis ul#s3devDD {
     border-style: solid;
     border-width: thin;
 
-    background-image: url("res/stageIcon.svg");
+    background: url('res/stageIcon.svg');
     background-repeat: no-repeat;
     background-position: left top;
     background-size: cover;

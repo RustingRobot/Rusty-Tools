@@ -5,6 +5,7 @@ console.log("Rusty features loaded");
 var oSBtn;
 var osValue=false;
 var costumeImages;
+var stagedLayers;
 if (document.URL.includes('editor')) {editorSetup();}
 else{waitForEditor();}
 
@@ -75,12 +76,18 @@ function OSClick(){//set value for the onion skin button
   }
 
   function DrawLoop(){//update the hidden canvas
-    
+    let zoomLvl = verticalScroll.style.height;
+
+    console.log(zoomLvl);
+    let img = new Image;
+    img.src = stagedLayers;
+    dCanvas.clearRect(0, 0, canvas.width, canvas.height);
+    dCanvas.drawImage(img,0,0,img.width / (100/parseInt(zoomLvl)),img.height / (100/parseInt(zoomLvl)));
     if(osValue){window.setTimeout(DrawLoop,0);}
     else{return;}
   }
 }
 
 function stageClick(){
-  console.log("noiec");
+  stagedLayers = document.getElementById("view-0").toDataURL();
 }
