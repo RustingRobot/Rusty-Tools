@@ -1,30 +1,32 @@
-// all added features by RustingRobot are here
+// all added features by RustingRobot are here :)
 console.log("Rusty features loaded");
 
-//variables for all of this script
-var oSBtn;
-var osValue=false;
-var costumeImages;
-var stagedLayers;
-if (document.URL.includes('editor')) {editorSetup();}
+//-global variables-//
+var oSBtn;          //onion skin button
+var osValue=false;  //used to save the state of activation of the onion skin
+var stagedLayers;   //list of URIs representing individual costumes 
+//------------------//
+
+if (document.URL.includes('editor')) {editorSetup();} //don't start editorSetup() if not in editor mode
 else{waitForEditor();}
 
 function editorSetup(){//set up everything in the editor (addEventListeners etc.)
   //groupVariables();
   var costumesBtn = document.getElementById('react-tabs-2');
   costumesBtn.addEventListener("click", function() {
-    waitForElement(); //wait for the costumes tab to load (more sprites more lag)
+    waitForElement(); //wait for the costumes tab to load (more sprites == more lag)
   }, false);
 }
-function waitForEditor(){//loops until the url contains "editor"
+
+function waitForEditor(){//loops until the url contains "editor" -then-> editorSetup()
   if(document.URL.includes('editor')){editorSetup(); }
   else{window.setTimeout(waitForEditor,100);}}
-function waitForElement(){  //loops until the bitmap button exists
+function waitForElement(){  //loops until the bitmap button exists -then-> CostumesClick()
   if(!!document.getElementsByClassName('button_button_u6SE2 paint-editor_bitmap-button_keW7B')[0]){CostumesClick(); }
   else{window.setTimeout(waitForElement,100);}}
-function CostumesClick(){ //append the onion skin button (and other text fields)
+
+  function CostumesClick(){ //append the custom  onion skin toolbar
   if(!!document.getElementById("osBtn")){return;} //check if this function already got executed
-  //Onion Skin buttons and text fields:
   let convertBtn = document.getElementsByClassName('button_button_u6SE2 paint-editor_bitmap-button_keW7B');
   convertBtn[0].insertAdjacentHTML('afterend', `
   <label class="onionSkinBtn" title="set onion skin">
@@ -45,8 +47,7 @@ function CostumesClick(){ //append the onion skin button (and other text fields)
   </label>
   `);
   var osBtn  = document.getElementById("osBtn");
-  if(osValue){osBtn.checked=true;}
-  else{osBtn.checked=false;}
+  osBtn.checked = osValue;  //if the osButton was previously checked, check it again
   osBtn.addEventListener("change", function() {
       OSClick();
   }, false);
@@ -54,9 +55,6 @@ function CostumesClick(){ //append the onion skin button (and other text fields)
   stageBtn.addEventListener("click", function() {
     stageClick();
   })
-  //getty all images
-  costumeImages = document.getElementsByClassName("sprite-selector-item_sprite-image_2QWuK");
-
 }
 
 function OSClick(){//set value for the onion skin button
@@ -65,25 +63,31 @@ function OSClick(){//set value for the onion skin button
     var horizontalScroll= document.getElementsByClassName("scrollable-canvas_horizontal-scrollbar_2w6OD")[0];
     var verticalScroll= document.getElementsByClassName("scrollable-canvas_vertical-scrollbar_lbD_c")[0];
     let canvasContainer = document.getElementsByClassName("paint-editor_canvas-container_x2D0a")[0];
+    //here we get sneaky, we add our own canvas in front of the already existing canvas to avoid the default annoying screen refreshes to make our own
     canvasContainer.insertAdjacentHTML('beforeend',`
     <canvas id="osCanvas" class ="osCanvas" width="480" height="360"></canvas>
     `)
     var canvas = document.getElementById("osCanvas");
-    var dCanvas = canvas.getContext("2d");
+    var dCanvas = canvas.getContext("2d");  //dCanvas is drawable
+    dCanvas.imageSmoothingEnabled = false;  //disable anti-aliasing since it looks a bit weird at higher zoom levels
+    var osCanvasX,osCanvasY,osOffsetX,osOffsetY;
     DrawLoop();
   }else{
     document.getElementById("osCanvas").parentNode.removeChild(document.getElementById("osCanvas"));
   }
 
-  function DrawLoop(){//update the hidden canvas
-    let zoomLvl = verticalScroll.style.height;
-
-    console.log(zoomLvl);
+  function DrawLoop(){  //update the hidden canvas (this function repeats until no longer in the costumes tab)
+    let zoomLvl = 100/ parseInt(verticalScroll.style.height); //calculate the zoom level / full size is zoomLvl 1!
     let img = new Image;
     img.src = stagedLayers;
-    dCanvas.clearRect(0, 0, canvas.width, canvas.height);
-    dCanvas.drawImage(img,0,0,img.width / (100/parseInt(zoomLvl)),img.height / (100/parseInt(zoomLvl)));
-    if(osValue){window.setTimeout(DrawLoop,0);}
+    osCanvasX = img.width * zoomLvl; 
+    osCanvasY = img.height * zoomLvl;
+    osOffsetX = parseInt(horizontalScroll.style.left);
+    osOffsetY = parseInt(verticalScroll.style.top);
+
+    dCanvas.clearRect(0, 0, canvas.width, canvas.height); //clear previous image 
+    dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 + osOffsetX,canvas.height / 2 - osCanvasY / 2 + osOffsetY,osCanvasX,osCanvasY);  //the image gets drawn! (source, posX, posY, sizeX, sizeY)
+    if(osValue){window.setTimeout(DrawLoop,0);} //restart DrawLoop() without stopping the browser
     else{return;}
   }
 }
