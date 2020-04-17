@@ -211,10 +211,10 @@ onionSkinBtn:checked {
   pointer-events:none;
   top:0px;
   left:0px;
-  opacity: 0.5;
+  opacity: 0.2;
 }
-/* ---collapsibles------ */
-.collapsableBG{
+/* ---collapsible------ */
+.collapsibleBG{
   pointer-events: all;
   border: 1px solid #000000;
   border-style: solid;

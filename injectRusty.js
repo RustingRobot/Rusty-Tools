@@ -3,6 +3,8 @@ console.log("Rusty features loaded");
 
 //-global variables-//
 var oSBtn;          //onion skin button
+var OpacityInp;     //Opacity input field
+var FramesInp;     //Frames input field
 var osValue=false;  //used to save the state of activation of the onion skin
 var stagedLayers;   //list of URIs representing individual costumes 
 //------------------//
@@ -46,7 +48,9 @@ function waitForElement(){  //loops until the bitmap button exists -then-> Costu
     <button type="button" class="onionAddBtn" id="onionAddBtn" title="stage this frame"></button> 
   </label>
   `);
-  var osBtn  = document.getElementById("osBtn");
+  OpacityInp = document.getElementById("osAlphaInp");
+  FramesInp = document.getElementById("osFrameNr");
+  osBtn  = document.getElementById("osBtn");
   osBtn.checked = osValue;  //if the osButton was previously checked, check it again
   osBtn.addEventListener("change", function() {
       OSClick();
@@ -82,16 +86,15 @@ function OSClick(){//set value for the onion skin button
     img.src = stagedLayers;
     osCanvasX = img.width * zoomLvl; 
     osCanvasY = img.height * zoomLvl;
-    osOffsetX = parseInt(horizontalScroll.style.left);
-    osOffsetY = parseInt(verticalScroll.style.top);
-
+    osOffsetX = (parseFloat(horizontalScroll.style.left) * zoomLvl / (zoomLvl - 1) - 50)* (zoomLvl-1) * 4.8;
+    osOffsetY = (parseFloat(verticalScroll.style.top) * zoomLvl / (zoomLvl - 1) - 50)* (zoomLvl-1) * 3.6;
     dCanvas.clearRect(0, 0, canvas.width, canvas.height); //clear previous image 
-    dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 + osOffsetX,canvas.height / 2 - osCanvasY / 2 + osOffsetY,osCanvasX,osCanvasY);  //the image gets drawn! (source, posX, posY, sizeX, sizeY)
+    dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 - osOffsetX,canvas.height / 2 - osCanvasY / 2 - osOffsetY,osCanvasX,osCanvasY);  //the image gets drawn! (source, posX, posY, sizeX, sizeY)
     if(osValue){window.setTimeout(DrawLoop,0);} //restart DrawLoop() without stopping the browser
     else{return;}
   }
 }
 
 function stageClick(){
-  stagedLayers = document.getElementById("view-0").toDataURL();
+  stagedLayers = document.getElementsByClassName("paper-canvas_paper-canvas_1y588")[0].toDataURL();
 }
