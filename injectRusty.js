@@ -55,7 +55,6 @@ function waitForElement(){  //loops until the bitmap button exists -then-> Costu
   osBtn.addEventListener("change", function() {
       OSClick();
   }, false);
-  var stageBtn = document.getElementById("onionAddBtn");
   stageBtn.addEventListener("click", function() {
     stageClick();
   })
