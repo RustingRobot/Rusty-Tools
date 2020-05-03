@@ -111,134 +111,6 @@ div#s3devDDOut.vis ul#s3devDD {
     content: '● ';
 }
 
-/* -------Rusty's css elements----------- */
-.onionSkinBtn {
-  position: relative;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  user-select: none;
-}
-
-.onionAddBtn {
-    position: relative;
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    user-select: none;
-    border-radius: .25rem;
-    background: transparent;
-    color: #d9d9d9;
-    border-color: #d9d9d9;
-    border-style: solid;
-    border-width: thin;
-
-    background: url('res/stageIcon.svg');
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: cover;
-}
-
-.onionAddBtn:active{
-    background: #dbeaff;
-}
-
-.onionSkinBtn input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-  user-select: none;
-
-} 
-
-.btnImg {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: Transparent;
-  transition: .4s;
-  background-image: url("res/onionSkinIcon.svg");
-  content: url("res/onionSkinIcon.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  user-select: none;
-  border-radius: .25rem;
-}
-
-input:checked + .btnImg {
-  background-color: #1a3459;
-  filter: brightness(3);
-}
-
-onionSkinBtn:checked {
-  background-color: #2196F3;
-}
-
-.osAlphaInp{
-  height: 2rem;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: #575e75;
-
-  border-width: 1px;
-  border-style: solid;
-  border-color: #E9EEF2;
-  border-radius: 2rem;
-  padding-left: 0.5rem;
-
-  outline: none;
-  cursor: text;
-  overflow: hidden;
-     text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-  width: 4rem;
-  user-select: none;
-}
-
-.OnionSkin-container{
-  user-select: none;
-}
-
-.osCanvas{
-  position:absolute;
-  pointer-events:none;
-  top:0px;
-  left:0px;
-  opacity: 0.2;
-}
-/* ---collapsible------ */
-.collapsibleBG{
-  pointer-events: all;
-  border: 1px solid #000000;
-  border-style: solid;
-}
-
-.collapsible{
-  fill: orange;
-  pointer-events: all;
-}
-
-.collapsible:hover{
-  fill: #ffc14d;
-  cursor: pointer;
-}
-
-.content{
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
-/* --------end---------- */
-
-
 .define {
     color: rgb(255, 102, 128);
 }
@@ -330,3 +202,174 @@ onionSkinBtn:checked {
     font-weight: bold;
     line-height: 2;
 }
+
+/* -------Rusty's css elements----------- */
+.onionSkinBtn {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    user-select: none;
+  }
+  
+  .onionAddBtn {
+      position: relative;
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      user-select: none;
+      border-radius: .25rem;
+      background: transparent;
+      color: #d9d9d9;
+      border-color: #d9d9d9;
+      border-style: solid;
+      border-width: thin;
+  
+      background: url('res/stageIcon.svg');
+      background-repeat: no-repeat;
+      background-position: left top;
+      background-size: cover;
+  }
+  
+  .onionAddBtn:active{
+      background: #dbeaff;
+  }
+  
+  .onionSkinBtn input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    user-select: none;
+  
+  } 
+  
+  .btnImg {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: Transparent;
+    transition: .4s;
+    background-image: url("res/onionSkinIcon.svg");
+    content: url("res/onionSkinIcon.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    user-select: none;
+    border-radius: .25rem;
+  }
+  
+  input:checked + .btnImg {
+    background-color: #1a3459;
+    filter: brightness(3);
+  }
+  
+  onionSkinBtn:checked {
+    background-color: #2196F3;
+  }
+  
+  .osAlphaInp{
+    height: 2rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #575e75;
+  
+    border-width: 1px;
+    border-style: solid;
+    border-color: #E9EEF2;
+    border-radius: 2rem;
+    padding-left: 0.5rem;
+  
+    outline: none;
+    cursor: text;
+    overflow: hidden;
+       text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    width: 4rem;
+    user-select: none;
+  }
+  
+  .OnionSkin-container{
+    user-select: none;
+  }
+  
+  .osCanvas{
+    position:absolute;
+    pointer-events:none;
+    top:0px;
+    left:0px;
+    opacity: 1;
+  }
+  
+  .notStagedLayer{
+    background-color: #ff794d;
+    color:white;
+    border-radius: 10%;
+  }
+
+  .ytEmbed{
+    position:absolute;
+    top:0px;
+    left:0px;
+    border-radius: 10px;
+    background-image: url("res/loading.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .spEmbed{
+    position:absolute;
+    top:0px;
+    left:0px;
+    background-image: url("res/loading.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .TabBar{
+    display: flex;
+    margin-left: 0.5em;
+  }
+
+  .tabButtons{
+    box-sizing: border-box;
+    display: flex;
+    margin-left: 0.2em;
+    border-radius: calc(0.5rem / 2);
+    width: calc(1.8rem + 2px);
+    height: calc(1.8rem + 2px);
+    background: rgb(238, 239, 243);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .tabButtons:hover{
+    background-color: hsla(215, 100%, 65%, 0.15);
+  }
+
+  .ytImg{
+    background-image: url("res/ytVid.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .spImg{
+    background-image: url("res/sProj.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .homeImg{
+    background-image: url("res/home.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  /* --------end---------- */

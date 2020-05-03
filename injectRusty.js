@@ -1,13 +1,16 @@
 // all added features by RustingRobot are here :)
 console.log("Rusty features loaded");
 
-//-global variables-//
-var oSBtn;          //onion skin button
-var OpacityInp;     //Opacity input field
-var FramesInp;     //Frames input field
-var osValue=false;  //used to save the state of activation of the onion skin
-var stagedLayers;   //list of URIs representing individual costumes 
-//------------------//
+//-----global variables------//
+var oSBtn;                   //onion skin button
+var reSizeBtn;               //reset size button
+var OpacityInp;              //Opacity input field
+var FramesInp;               //Frames input field
+var stageBtn;         
+var osValue=false;           //used to save the state of activation of the onion skin
+var SpriteCollection = [[]]; //a collection consisting of layerCollections for each sprite
+var cardActActivated = false;
+//---------------------------//
 
 if (document.URL.includes('editor')) {editorSetup();} //don't start editorSetup() if not in editor mode
 else{waitForEditor();}
@@ -21,6 +24,11 @@ function editorSetup(){//set up everything in the editor (addEventListeners etc.
 }
 
 function waitForEditor(){//loops until the url contains "editor" -then-> editorSetup()
+  if(document.getElementsByClassName('project-description')[1] && !cardActActivated){
+    cardActActivated = true;
+    applyCardActions();
+  }
+
   if(document.URL.includes('editor')){editorSetup(); }
   else{window.setTimeout(waitForEditor,100);}}
 function waitForElement(){  //loops until the bitmap button exists -then-> CostumesClick()
@@ -28,6 +36,7 @@ function waitForElement(){  //loops until the bitmap button exists -then-> Costu
   else{window.setTimeout(waitForElement,100);}}
 
   function CostumesClick(){ //append the custom  onion skin toolbar
+    setNotStagedLayers();
   if(!!document.getElementById("osBtn")){return;} //check if this function already got executed
   let convertBtn = document.getElementsByClassName('button_button_u6SE2 paint-editor_bitmap-button_keW7B');
   convertBtn[0].insertAdjacentHTML('afterend', `
@@ -44,19 +53,19 @@ function waitForElement(){  //loops until the bitmap button exists -then-> Costu
         <input class="osAlphaInp" id="osFrameNr" type = "text" placeholder="# frame" title="set frame nr."></input>
       </span>
     </div>
-  <label >
-    <button type="button" class="onionAddBtn" id="onionAddBtn" title="stage this frame"></button> 
-  </label>
   `);
   OpacityInp = document.getElementById("osAlphaInp");
   FramesInp = document.getElementById("osFrameNr");
+  reSizeBtn = document.getElementsByClassName("button_button_u6SE2 paint-editor_button-group-button_1I1tm")[1];
+  stageBtn = document.getElementById("onionAddBtn");
   osBtn  = document.getElementById("osBtn");
   osBtn.checked = osValue;  //if the osButton was previously checked, check it again
+  //add functions to buttons
   osBtn.addEventListener("change", function() {
       OSClick();
   }, false);
-  stageBtn.addEventListener("click", function() {
-    stageClick();
+  reSizeBtn.addEventListener("click", function() {
+    window.setTimeout(stageClick,10);
   })
 }
 
@@ -76,24 +85,166 @@ function OSClick(){//set value for the onion skin button
     var osCanvasX,osCanvasY,osOffsetX,osOffsetY;
     DrawLoop();
   }else{
-    document.getElementById("osCanvas").parentNode.removeChild(document.getElementById("osCanvas"));
+    if(document.getElementById("osCanvas"))
+      document.getElementById("osCanvas").parentNode.removeChild(document.getElementById("osCanvas"));
   }
 
   function DrawLoop(){  //update the hidden canvas (this function repeats until no longer in the costumes tab)
     let zoomLvl = 100/ parseInt(verticalScroll.style.height); //calculate the zoom level / full size is zoomLvl 1!
-    let img = new Image;
-    img.src = stagedLayers;
-    osCanvasX = img.width * zoomLvl; 
-    osCanvasY = img.height * zoomLvl;
+    osCanvasX = 480 * zoomLvl; 
+    osCanvasY = 360 * zoomLvl;
     osOffsetX = (parseFloat(horizontalScroll.style.left) * zoomLvl / (zoomLvl - 1) - 50)* (zoomLvl-1) * 4.8;
     osOffsetY = (parseFloat(verticalScroll.style.top) * zoomLvl / (zoomLvl - 1) - 50)* (zoomLvl-1) * 3.6;
     dCanvas.clearRect(0, 0, canvas.width, canvas.height); //clear previous image 
-    dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 - osOffsetX,canvas.height / 2 - osCanvasY / 2 - osOffsetY,osCanvasX,osCanvasY);  //the image gets drawn! (source, posX, posY, sizeX, sizeY)
+    let img = new Image;
+    dCanvas.globalAlpha = 0.2;
+    
+    img.src = SpriteCollection[getSelectedSprite()][getSelectedCostume() - 1];
+    dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 - osOffsetX,canvas.height / 2 - osCanvasY / 2 - osOffsetY,osCanvasX,osCanvasY);
+    img.src = SpriteCollection[getSelectedSprite()][getSelectedCostume() + 1];
+    dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 - osOffsetX,canvas.height / 2 - osCanvasY / 2 - osOffsetY,osCanvasX,osCanvasY);
+    console.debug("+1: "+SpriteCollection[getSelectedSprite()][getSelectedCostume() + 1]);
+    console.debug("-1: "+SpriteCollection[getSelectedSprite()][getSelectedCostume() - 1]);
+    /*
+    for(var i=0;i<FramesInp.value;i++){
+      //dCanvas.globalAlpha = dCanvas.globalAlpha * 0.5;
+      img.style.opacity = 0.5;
+      img.src = SpriteCollection[getSelectedSprite()][getSelectedCostume() - i];
+      dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 - osOffsetX,canvas.height / 2 - osCanvasY / 2 - osOffsetY,osCanvasX,osCanvasY);  //the image gets drawn! (source, posX, posY, sizeX, sizeY)
+    }
+    dCanvas.globalAlpha = 0.5;
+    for(var i=0;i<FramesInp.value;i++){
+      //dCanvas.globalAlpha = dCanvas.globalAlpha * 0.5;
+      img.src = SpriteCollection[getSelectedSprite()][getSelectedCostume() + i];
+      dCanvas.drawImage(img,canvas.width / 2 - osCanvasX / 2 - osOffsetX,canvas.height / 2 - osCanvasY / 2 - osOffsetY,osCanvasX,osCanvasY);  //the image gets drawn! (source, posX, posY, sizeX, sizeY)
+    }
+    */
+    OpacityInp.value = osValue;
     if(osValue){window.setTimeout(DrawLoop,0);} //restart DrawLoop() without stopping the browser
     else{return;}
   }
 }
 
 function stageClick(){
-  stagedLayers = document.getElementsByClassName("paper-canvas_paper-canvas_1y588")[0].toDataURL();
+  SpriteCollection[getSelectedSprite()][getSelectedCostume()] = document.getElementsByClassName("paper-canvas_paper-canvas_1y588")[0].toDataURL(); //save current canvas to the right pos in SpriteCollection.
+  setNotStagedLayers();
+}
+
+function getSelectedSprite(){
+  var allSprites = document.getElementsByClassName("sprite-selector_items-wrapper_4bcOj box_box_2jjDp")[0].children;
+  for(var i = 0; i < allSprites.length; i++){
+    if(allSprites[i].firstChild.children.length == 4) //the selected sprite will have one child-element more (bin-icon)
+      return i;
+  }
+}
+
+function getSelectedCostume(){
+  var allCostumes = document.getElementsByClassName("selector_list-area_1Xbj_ box_box_2jjDp")[0].children;
+  for(var i = 0; i < allCostumes.length; i++){
+    if(allCostumes[i].firstChild.children.length == 5)  //the selected costume will have one child-element more (bin-icon)
+      return i;
+  }
+}
+
+function setNotStagedLayers(){
+  var allCostumes = document.getElementsByClassName("selector_list-area_1Xbj_ box_box_2jjDp")[0].children;
+  for(var i = 0; i < allCostumes.length; i++){
+    if(SpriteCollection[getSelectedSprite()][i] == null){
+      allCostumes[i].firstChild.children[2].firstChild.classList.add("notStagedLayer");
+    }else{
+      allCostumes[i].firstChild.children[2].firstChild.classList.remove("notStagedLayer");
+    }
+  }
+}
+
+function applyCardActions(){
+  document.getElementsByClassName("controls_controls-container_2xinB")[0].insertAdjacentHTML('beforeend',`
+    <div id="TabBar" class="TabBar"></div> 
+  `)
+  var cardContent = document.getElementsByClassName('project-description')[1].innerHTML;
+  appendTab("home","");
+  
+  var links = [];
+  var linkTypes = [];
+  var Indices = getIndicesOf("https://scratch.mit.edu/projects/",cardContent)
+  for(var i = 0; i < Indices.length; i += 2){
+    appendTab("sp",extractLink(Indices[i],"sp"));
+  }
+  Indices = getIndicesOf("https://scratch.mit.edu/discuss/youtube/",cardContent)
+  for(var i = 0; i < Indices.length; i += 2){
+    appendTab("yt",extractLink(Indices[i],"yt"));
+  }
+}
+
+function extractLink(ogIndex,type){
+  var index = ogIndex;
+  var cardContent = document.getElementsByClassName('project-description')[1].innerHTML;
+  while(cardContent[index] != '"' && index < ogIndex+80){index++;}
+  var start;
+  switch (type){
+    case "yt":
+      start = 40 + ogIndex;
+      break;
+    case "sp":
+      start = 33 + ogIndex;
+      break;
+  }
+  return cardContent.substring(start,index);
+}
+
+function appendTab(type,link){
+  document.getElementById("TabBar").insertAdjacentHTML('beforeend', `
+  <span class="tabButtons" role="button"><div class="button_content_3jdgj"></div></span>
+  `)
+  let allTabBtns = document.getElementsByClassName("tabButtons");
+  allTabBtns[allTabBtns.length-1].classList.add(type+"Img");
+  allTabBtns[allTabBtns.length-1].addEventListener("click",function() {
+    appendCanvasIFrame(type,link);
+  } , false);
+}
+
+function appendCanvasIFrame(type,link){
+  removeElementsByClass("ytEmbed");
+  removeElementsByClass("spEmbed");
+  switch (type){
+    case "home":
+      break;
+    case "yt":
+      document.getElementsByClassName("stage_stage-wrapper_eRRuk box_box_2jjDp")[0].insertAdjacentHTML('beforeend', `
+      <iframe class="ytEmbed" width="482" height="362" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      `);
+      document.getElementsByClassName("ytEmbed")[0].setAttribute("src","https://www.youtube.com/embed/"+link);
+      break;
+    case "sp":
+      document.getElementsByClassName("stage_stage-wrapper_eRRuk box_box_2jjDp")[0].insertAdjacentHTML('beforeend', `
+      <iframe class="spEmbed" src="" allowtransparency="true" width="482" height="362" frameborder="0" scrolling="no" allowfullscreen></iframe>
+      `);
+      document.getElementsByClassName("spEmbed")[0].setAttribute("src","https://scratch.mit.edu/projects/"+link+"embed");
+      break;
+  }
+
+}
+
+function removeElementsByClass(className){
+  var elements = document.getElementsByClassName(className);
+  while(elements.length > 0){
+      elements[0].parentNode.removeChild(elements[0]);
+  }
+}
+
+function getIndicesOf(searchStr, str, caseSensitive) {
+  var searchStrLen = searchStr.length;
+  if (searchStrLen == 0) {
+      return [];
+  }
+  var startIndex = 0, index, indices = [];
+  if (!caseSensitive) {
+      str = str.toLowerCase();
+      searchStr = searchStr.toLowerCase();
+  }
+  while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+      indices.push(index);
+      startIndex = index + searchStrLen;
+  }
+  return indices;
 }
